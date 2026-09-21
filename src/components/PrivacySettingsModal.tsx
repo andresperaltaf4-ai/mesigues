@@ -74,10 +74,16 @@ export const PrivacySettingsModal: React.FC<PrivacySettingsModalProps> = ({
       >
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
-            <Key className="w-5 h-5 text-amber-500" />
-            <h3 className="font-extrabold text-sm text-neutral-900 dark:text-white">
-              Clave Maestra E2EE & Huella de Seguridad
-            </h3>
+            <div className="w-8 h-8 rounded-lg bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-500">
+              <Lock className="w-4 h-4" />
+            </div>
+            <div>
+              <h3 className="font-extrabold text-sm text-neutral-900 dark:text-white flex items-center gap-1.5">
+                <span>Clave del Candadito de Seguridad (E2EE)</span>
+                <Key className="w-3.5 h-3.5 text-amber-400" />
+              </h3>
+              <span className="text-[11px] text-emerald-500 font-bold">Activa y Visible para el Usuario</span>
+            </div>
           </div>
           <button
             onClick={handleRegenerateKeys}
@@ -85,21 +91,25 @@ export const PrivacySettingsModal: React.FC<PrivacySettingsModalProps> = ({
             className="flex items-center gap-1.5 text-xs font-bold text-[#00aff0] hover:underline cursor-pointer"
           >
             <RefreshCw className={`w-3.5 h-3.5 ${regenerating ? 'animate-spin' : ''}`} />
-            <span>Rotar Claves Criptográficas</span>
+            <span>Rotar Clave</span>
           </button>
         </div>
 
         <p className="text-xs text-neutral-400 mb-4 leading-relaxed">
-          Tus mensajes directos y contenidos adquiridos se cifran con esta clave generada localmente en tu navegador mediante la Web Crypto API.
+          Esta es la <strong className="text-emerald-500">clave que protege el candado</strong> en tu barra superior y chats. Cifra y descifra tus mensajes directos y contenidos exclusivos directamente en tu navegador web mediante la Web Crypto API.
         </p>
 
-        <div className="p-4 rounded-xl bg-neutral-100 dark:bg-neutral-800 text-center border border-neutral-200 dark:border-neutral-700 mb-3">
-          <span className="text-[10px] text-neutral-400 uppercase tracking-wider block mb-1">
-            Safety Number SHA-256 Fingerprint
-          </span>
-          <div className="font-mono font-black text-lg sm:text-xl text-[#00aff0] tracking-widest">
+        <div className="p-4 rounded-xl bg-neutral-100 dark:bg-neutral-800/90 text-center border-2 border-emerald-500/30 mb-3 shadow-inner">
+          <div className="flex items-center justify-center gap-1.5 mb-1.5 text-emerald-500 font-bold text-xs">
+            <Lock className="w-3.5 h-3.5" />
+            <span className="uppercase tracking-wider">Tu Clave Única del Candado</span>
+          </div>
+          <div className="font-mono font-black text-xl sm:text-2xl text-[#00aff0] tracking-widest select-all">
             {currentUser.e2eeKeyFingerprint}
           </div>
+          <span className="text-[10px] text-neutral-400 mt-1 block">
+            Huella Criptográfica SHA-256 Verificada
+          </span>
         </div>
 
         <div className="flex items-center justify-between text-xs text-neutral-400">

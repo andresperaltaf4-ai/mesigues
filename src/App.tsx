@@ -27,6 +27,7 @@ import { CreatorDashboard } from './components/CreatorDashboard';
 import { MessagesE2EE } from './components/MessagesE2EE';
 import { PushNotificationManager } from './components/PushNotificationManager';
 import { PrivacySettingsModal } from './components/PrivacySettingsModal';
+import { LockKeyModal } from './components/LockKeyModal';
 import { PaymentModal, PaymentPurpose } from './components/PaymentModal';
 import { NewPostModal } from './components/NewPostModal';
 import { encryptE2EEMessage } from './utils/crypto';
@@ -58,6 +59,7 @@ export default function App() {
   // Modal States
   const [activePaymentPurpose, setActivePaymentPurpose] = useState<PaymentPurpose | null>(null);
   const [isNewPostOpen, setIsNewPostOpen] = useState(false);
+  const [isLockKeyModalOpen, setIsLockKeyModalOpen] = useState(false);
 
   // Real-time Push Notification Toast
   const [activePushToast, setActivePushToast] = useState<NotificationItem | null>(null);
@@ -403,6 +405,7 @@ export default function App() {
         onOpenNewPost={() => setIsNewPostOpen(true)}
         onOpenWallet={() => setActiveTab('wallet')}
         onOpenPrivacy={() => setActiveTab('privacy')}
+        onOpenKeyModal={() => setIsLockKeyModalOpen(true)}
         onOpenNotifications={() => setActiveTab('notifications')}
         onSearch={() => {}}
         darkMode={darkMode}
@@ -607,6 +610,19 @@ export default function App() {
           darkMode={darkMode}
         />
       )}
+
+      {/* Lock Key Modal (Clave del Candadito Visible) */}
+      <LockKeyModal
+        isOpen={isLockKeyModalOpen}
+        onClose={() => setIsLockKeyModalOpen(false)}
+        currentUser={currentUser}
+        onUpdatePrivacy={handleUpdatePrivacy}
+        onOpenFullPrivacy={() => {
+          setIsLockKeyModalOpen(false);
+          setActiveTab('privacy');
+        }}
+        darkMode={darkMode}
+      />
     </div>
   );
 }

@@ -10,6 +10,7 @@ import {
   Lock,
   EyeOff,
   Sparkles,
+  Key,
 } from 'lucide-react';
 import { User } from '../types';
 import { BrandLogo } from './BrandLogo';
@@ -25,6 +26,7 @@ interface NavbarProps {
   darkMode: boolean;
   onToggleDarkMode: () => void;
   onSwitchRole: () => void;
+  onOpenKeyModal?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -38,6 +40,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   darkMode,
   onToggleDarkMode,
   onSwitchRole,
+  onOpenKeyModal,
 }) => {
   const [searchValue, setSearchValue] = useState('');
 
@@ -62,17 +65,19 @@ export const Navbar: React.FC<NavbarProps> = ({
             <BrandLogo size="md" />
           </div>
 
-          {/* Privacy & E2EE Status Pill */}
+          {/* Privacy & E2EE Status Pill - Indicador Discreto */}
           <button
             id="btn-navbar-e2ee-status"
-            onClick={onOpenPrivacy}
-            title="Cifrado E2EE Activo y Ajustes de Privacidad"
-            className="hidden md:flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/20 transition-all cursor-pointer"
+            onClick={onOpenKeyModal || onOpenPrivacy}
+            title="Conexión Cifrada (E2EE) • Clic para auditar la seguridad"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 transition-all cursor-pointer shadow-xs group"
           >
-            <Lock className="w-3 h-3 text-emerald-500" />
-            <span>E2EE 256-bit</span>
+            <Lock className="w-3.5 h-3.5 text-emerald-500 group-hover:scale-110 transition-transform" />
+            <span className="font-bold tracking-tight">Conexión Cifrada</span>
+            <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+
             {currentUser.ghostMode && (
-              <span className="flex items-center gap-1 pl-1 border-l border-emerald-500/30 text-indigo-500">
+              <span className="hidden lg:flex items-center gap-1 pl-1.5 border-l border-emerald-500/30 text-indigo-500">
                 <EyeOff className="w-3 h-3" /> Ghost
               </span>
             )}

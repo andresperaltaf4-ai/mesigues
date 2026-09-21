@@ -173,9 +173,14 @@ export const MessagesE2EE: React.FC<MessagesE2EEProps> = ({
                   )}
                 </div>
                 <div className="flex items-center gap-1.5 text-[11px] text-neutral-400">
-                  <span className="flex items-center gap-1 text-emerald-500 font-semibold">
-                    <Lock className="w-3 h-3" /> E2EE AES-GCM 256
-                  </span>
+                  <button
+                    onClick={() => setShowSecurityModal(true)}
+                    className="flex items-center gap-1 text-emerald-500 font-semibold hover:underline cursor-pointer"
+                    title="Auditar seguridad del chat"
+                  >
+                    <Lock className="w-3 h-3 text-emerald-500" />
+                    <span>Protegido • Cifrado E2EE</span>
+                  </button>
                   <span>•</span>
                   <span>{activeConv.participant.isOnline ? 'En línea' : activeConv.participant.lastSeen || 'Desconectado'}</span>
                 </div>
@@ -186,11 +191,11 @@ export const MessagesE2EE: React.FC<MessagesE2EEProps> = ({
             <button
               id="btn-verify-e2ee-keys"
               onClick={() => setShowSecurityModal(true)}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 text-neutral-700 dark:text-neutral-200 transition-colors cursor-pointer"
-              title="Verificar huella digital de cifrado"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 transition-colors cursor-pointer"
+              title="Auditar seguridad y ver huella criptográfica"
             >
               <Key className="w-3.5 h-3.5 text-amber-500" />
-              <span className="hidden md:inline">Claves de Seguridad</span>
+              <span className="hidden sm:inline">Auditar Seguridad</span>
             </button>
           </div>
 
