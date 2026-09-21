@@ -36,7 +36,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
   darkMode,
 }) => {
   const [method, setMethod] = useState<'CARD' | 'CRYPTO' | 'WALLET'>(
-    currentUser.walletBalance >= purpose.price ? 'WALLET' : 'CARD'
+    purpose.type !== 'wallet_topup' && currentUser.walletBalance >= purpose.price ? 'WALLET' : 'CARD'
   );
 
   // Card Form State
@@ -257,17 +257,20 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
                   {/* Option 1: MeSigues Wallet */}
                   <button
                     type="button"
+                    disabled={purpose.type === 'wallet_topup'}
                     onClick={() => setMethod('WALLET')}
-                    className={`p-3 rounded-2xl border text-left transition-all cursor-pointer ${
-                      method === 'WALLET'
-                        ? 'border-[#00aff0] bg-[#00aff0]/10 text-[#00aff0]'
-                        : 'border-neutral-300 dark:border-neutral-700 text-neutral-400'
+                    className={`p-3 rounded-2xl border text-left transition-all ${
+                      purpose.type === 'wallet_topup'
+                        ? 'opacity-40 cursor-not-allowed border-neutral-300 dark:border-neutral-800 text-neutral-400'
+                        : method === 'WALLET'
+                        ? 'border-[#00aff0] bg-[#00aff0]/10 text-[#00aff0] cursor-pointer'
+                        : 'border-neutral-300 dark:border-neutral-700 text-neutral-400 cursor-pointer'
                     }`}
                   >
                     <Wallet className="w-4 h-4 mb-1" />
                     <div className="text-xs font-black text-neutral-900 dark:text-white">Billetera</div>
                     <div className="text-[10px] text-emerald-500 font-bold">
-                      ${currentUser.walletBalance.toFixed(2)} disp.
+                      {purpose.type === 'wallet_topup' ? 'Recargando' : `$${currentUser.walletBalance.toFixed(2)} disp.`}
                     </div>
                   </button>
 

@@ -173,6 +173,16 @@ export default function App() {
         `Has agradecido a @${purpose.creatorUsername} con una propina de $${amount.toFixed(2)}.`,
         'tip'
       );
+    } else if (purpose.type === 'wallet_topup') {
+      setCurrentUser((prev) => ({
+        ...prev,
+        walletBalance: prev.walletBalance + amount,
+      }));
+      triggerPush(
+        '¡Saldo Recargado! 💳',
+        `Has añadido $${amount.toFixed(2)} USD a tu Billetera mesigues con éxito.`,
+        'tip'
+      );
     }
 
     // Close modal
@@ -548,12 +558,13 @@ export default function App() {
                       price: 50,
                     })
                   }
-                  className="px-5 py-2.5 rounded-full bg-[#00aff0] hover:bg-[#009fe0] text-white text-xs font-black shadow-md cursor-pointer"
+                  className="px-5 py-2.5 rounded-full bg-[#00aff0] hover:bg-[#009fe0] text-white text-xs font-black shadow-md cursor-pointer transition-transform active:scale-95"
                 >
-                  + RECARGAR SALDO ($50)
+                  + RECARGAR SALDO
                 </button>
               </div>
 
+              {/* Saldo Disponible Card */}
               <div className="p-5 rounded-2xl bg-gradient-to-r from-[#00aff0] to-blue-600 text-white shadow-lg flex items-center justify-between">
                 <div>
                   <span className="text-xs uppercase tracking-wider opacity-80 block">Saldo Disponible</span>
@@ -562,6 +573,45 @@ export default function App() {
                 <div className="text-right text-xs opacity-90">
                   <div className="font-mono">•••• •••• •••• 8921</div>
                   <div className="text-[10px] mt-1">Cifrado con tokenización PCI-DSS</div>
+                </div>
+              </div>
+
+              {/* Fila de Selección Rápida de Montos ($10, $25, $50) debajo del Saldo */}
+              <div className="space-y-2.5">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-black uppercase tracking-wider text-neutral-500 dark:text-neutral-400">
+                    Selección rápida de recarga:
+                  </span>
+                  <span className="text-[11px] text-neutral-400">
+                    Acreditación inmediata
+                  </span>
+                </div>
+                <div className="grid grid-cols-3 gap-3">
+                  {[10, 25, 50].map((amount) => (
+                    <button
+                      key={amount}
+                      id={`btn-quick-wallet-${amount}`}
+                      onClick={() =>
+                        setActivePaymentPurpose({
+                          type: 'wallet_topup',
+                          price: amount,
+                        })
+                      }
+                      className={`p-3.5 sm:p-4 rounded-2xl border text-center transition-all cursor-pointer font-black flex flex-col items-center justify-center gap-1 group shadow-xs hover:shadow-md hover:scale-[1.02] active:scale-[0.98] ${
+                        darkMode
+                          ? 'bg-[#10141b] hover:bg-[#18202b] border-neutral-700/80 hover:border-[#00aff0] text-white'
+                          : 'bg-neutral-50 hover:bg-white border-neutral-200 hover:border-[#00aff0] text-neutral-900'
+                      }`}
+                      title={`Recargar $${amount} USD`}
+                    >
+                      <span className="text-xl sm:text-2xl font-black text-[#00aff0] group-hover:text-sky-400">
+                        ${amount}
+                      </span>
+                      <span className="text-[10px] sm:text-xs font-bold text-neutral-500 dark:text-neutral-400 uppercase tracking-wide">
+                        Recargar
+                      </span>
+                    </button>
+                  ))}
                 </div>
               </div>
             </div>
