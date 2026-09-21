@@ -1,0 +1,7 @@
+{
+  "name": "mesigues",
+  "description": "Plataforma de alta gama para creadores de contenido exclusivo y suscripciones directas con cifrado de extremo a extremo, pagos seguros y panel de creador.",
+  "requestFramePermissions": ["camera", "microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
