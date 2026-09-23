@@ -1,5 +1,5 @@
 import React from 'react';
-import { Home, Compass, PlusCircle, MessageSquare, BarChart3, Bell } from 'lucide-react';
+import { Home, Bell, PlusCircle, MessageSquare, User } from 'lucide-react';
 import { ActiveTab } from './Sidebar';
 
 interface BottomNavProps {
@@ -38,16 +38,21 @@ export const BottomNav: React.FC<BottomNavProps> = ({
         <span className="text-[10px] mt-0.5">Inicio</span>
       </button>
 
-      {/* Explore Creators */}
+      {/* Notifications */}
       <button
-        id="btn-mobile-nav-explore"
-        onClick={() => onSelectTab('explore')}
-        className={`flex flex-col items-center justify-center p-2 rounded-xl transition-all cursor-pointer ${
-          activeTab === 'explore' ? 'text-[#00aff0] font-bold' : ''
+        id="btn-mobile-nav-notifications"
+        onClick={() => onSelectTab('notifications')}
+        className={`relative flex flex-col items-center justify-center p-2 rounded-xl transition-all cursor-pointer ${
+          activeTab === 'notifications' ? 'text-[#00aff0] font-bold' : ''
         }`}
       >
-        <Compass className="w-5 h-5" />
-        <span className="text-[10px] mt-0.5">Explorar</span>
+        <Bell className="w-5 h-5" />
+        {unreadNotifications > 0 && (
+          <span className="absolute top-1 right-2 w-4 h-4 rounded-full bg-[#00aff0] text-white text-[9px] font-extrabold flex items-center justify-center">
+            {unreadNotifications}
+          </span>
+        )}
+        <span className="text-[10px] mt-0.5">Alertas</span>
       </button>
 
       {/* Floating Center Create Button */}
@@ -77,16 +82,16 @@ export const BottomNav: React.FC<BottomNavProps> = ({
         <span className="text-[10px] mt-0.5">Chats</span>
       </button>
 
-      {/* Creator Studio / Analytics */}
+      {/* Profile */}
       <button
-        id="btn-mobile-nav-studio"
-        onClick={() => onSelectTab('creator-studio')}
+        id="btn-mobile-nav-profile"
+        onClick={() => onSelectTab('my-profile')}
         className={`flex flex-col items-center justify-center p-2 rounded-xl transition-all cursor-pointer ${
-          activeTab === 'creator-studio' ? 'text-[#00aff0] font-bold' : ''
+          activeTab === 'my-profile' ? 'text-[#00aff0] font-bold' : ''
         }`}
       >
-        <BarChart3 className="w-5 h-5" />
-        <span className="text-[10px] mt-0.5">Panel</span>
+        <User className="w-5 h-5" />
+        <span className="text-[10px] mt-0.5">Perfil</span>
       </button>
     </nav>
   );
